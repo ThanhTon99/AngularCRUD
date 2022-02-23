@@ -1,0 +1,19 @@
+<div class="ribbon">
+  <div class="text-center">
+    <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png"
+      class="img-fluid profile-image-pic img-thumbnail rounded-circle my-4" width="100px" alt="profile">
+  </div>
+  <form action="/?r=1900535053" method="post" [formGroup]="signupForm" (ngSubmit)="signUp()">
+    <input name="__RequestVerificationToken" type="hidden">
+    <span class="field-validation-valid error" data-valmsg-for="Username" data-valmsg-replace="true"></span>
+    <input formControlName="accout" autocomplete="off" class="input username" id="Username" name="Username"
+      placeholder="Tên đăng nhập" type="text" value="">
+    <input formControlName="password" autocomplete="off" class="input password" id="Password" name="Password"
+      placeholder="Mật khẩu" type="password">
+    <label class="signup1">
+      <a routerLink="/login"> Alreadly registered? Click to Login </a>
+    </label>
+    <a><button type="submit" class="submit">Đăng Ký</button></a>
+  </form>
+  <!-- <a href="#" class="forgot">Quên mật khẩu?</a> -->
+</div>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-light bg-primary">
+    <div class="container-fluid">
+      <h1 style="color: aliceblue;">Angular CRUD</h1>
+      <div class="d-flex">
+        <button (click)="clickAddNotify()" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+          class="btn btn-success">Add
+          Notify</button>
+        <button routerLink="/login" class="btn btn-danger mx-2">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Notify ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Start</th>
+          <th scope="col">End</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of notifyData">
+          <td>{{row.id}}</td>
+          <td>{{row.title}}</td>
+          <!-- <td><div [innerHtml]="row.content"></div></td> -->
+          <td>{{row.description}}</td>
+          <td>{{row.start}}</td>
+          <td>{{row.end}}</td>
+          <td>
+            <button (click)="onEdit(row)" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              class="btn btn-info">Edit</button>
+            <button (click)="deleteNotify(row)" class="btn btn-danger mx-2">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Notify Detail</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="formValue" >
+            <div class="card-body">
+              <div class="form-group col-md-12">
+                <label for="title">Title<a id="sao"> (*)</a></label>
+                <input type="text" formControlName="title" class="form-control"  name="title" placeholder="Tiêu Đề">
+                <small class="form-text text-danger"></small>
+              </div>
+
+              <div class="form-group col-md-12">
+                <label>Mô Tả</label>
+                <input type="text" formControlName="description" class="form-control" name="mota" placeholder="Mô Tả">
+                <small class="form-text text-muted"></small>
+              </div>
+
+              <div class="form-group col-12 ">
+                <label>Công Ty</label>
+                <input type="text" class="form-control" name="congty" placeholder="Công Ty">
+                <small class="form-text text-muted"></small>
+              </div>
+
+              <div class="form-group col-12 ">
+                <label>Nội Dung</label>
+                <ckeditor formControlName="content"></ckeditor>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label>Kiểu Hiển Thị</label>
+                  <select class="form-control">
+                    <option>Tin Tức</option>
+                    <option>Thông Báo</option>
+                    <option>Slide Ảnh</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>Kiểu Thông Báo</label>
+                  <select class="form-control">
+                    <option>Trước Khi Đăng Nhập</option>
+                    <option>Sau Khi Đăng Nhập</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label>Bắt Đầu <a id="sao">(*)</a></label>
+                  <input type="date" formControlName="start" class="form-control">
+                  <small class="form-text text-danger" name="start"></small>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="name">Kết Thúc <a id="sao">(*)</a></label>
+                  <input type="date" formControlName="end" class="form-control">
+                  <small class="form-text text-danger" name="end"></small>
+                </div>
+              </div>
+
+              <div class="form-row ">
+                <div class="form-group col-md-2">Kích Hoạt
+                  <input type="checkbox" />
+                </div>
+                <div class="form-group col-md-2">Cho phép hết hạn
+                  <input type="checkbox" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="formFile" class="form-label">Đính Kèm<input class="form-control" type="file"
+                      id="formFile"></label>
+                </div>
+                <div class="form-group col-md-4">
+                  <!-- <label for="formFile" class="form-label">Ảnh<input class="form-control" type="file" id="formFile"></label> -->
+                  <img *ngFor='let url of urls' [src]="url" height="100" width="100">Ảnh<br>
+                  <input type="file" (change)="onselectImage($event)" multiple>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="postNotifyDatails()" type="button" *ngIf="showAdd"
+            class="btn btn-primary">Add</button>
+          <button (click)="updateNotifyDatails()" type="button" *ngIf="showUpdate"
+            class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

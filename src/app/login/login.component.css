@@ -1,0 +1,198 @@
+
+body {
+    margin: 0;
+    font-size: 13px;
+    font-family: Arial;
+    overflow: hidden;
+}
+.background {
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    position: fixed; 
+    background-color: #e0ecf5;
+    /* background-image: url(./undraw_remotely_2j6y.svg); */
+    background-repeat: no-repeat;
+    background-size: 39%;  
+}
+.content {
+    width: 960px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 10px;
+}
+
+.ribbon {
+    border-radius: 10px;
+    top: 100px;
+    width: 384px;
+    height: 450px;
+    position: fixed;
+    right: 10%; 
+    background-color: #2d80ce;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0 -12px;
+}
+
+a {
+    color: #00ace4;
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+.ribbon a {
+    color: #131212;
+}
+
+.tel {
+    position: absolute;
+    top: 17px;
+    left: 134px;
+}
+
+.site {
+    position: absolute;
+    top: 17px;
+    left: 238px;
+}
+
+.input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 236px;
+    height: 37px;
+    padding: 0 10px 0 27px;   
+    
+}
+
+.username {
+    position: absolute;
+    top: 170px;
+    left: 76px;
+    border-radius: 5px;
+    background-color: #fafafa;
+}
+
+.password {
+    position: absolute;
+    top: 225px;
+    left: 76px;
+    border-radius: 5px;
+    background-color: #fafafa;
+}
+
+.submit {
+    position: absolute;
+    border: none;
+    outline: none;
+    top: 310px;
+    left: 76px;
+    height: 38px;
+    width: 236px;
+    border-radius: 19px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    color: #f0e9e9;
+    background: #00ace4;
+    cursor: pointer;
+}
+    .submit:hover {
+        background: #b2d24b;
+    }
+
+.remember {
+    position: absolute;
+    top: 279px;
+    left: 81px;
+    color: #0c0c0c;
+}
+    .remember input {
+        margin: 0;
+        top: 2px;
+        position: relative;
+    }
+.signup1{
+    position: absolute;
+    top: 280px;
+    left: 115px;
+    color: #0c0c0c;
+}
+.forgot {
+    position: absolute;
+    top: 279px;
+    left: 223px;
+}
+
+.profile-image-pic{
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+  }
+  
+@media only screen and (max-width: 767px) {
+    .content {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .intro {
+        display: none;
+    }
+
+    .ribbon {
+        max-width: 384px;
+        margin: 0 auto;
+        position: relative;
+    }
+}
+
+/* ------- Slide Show ------- */
+
+.cards-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.card img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.card {
+  margin: 0 0.5em;
+  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+  border: none;
+  border-radius: 0;
+}
+.carousel-inner {
+  padding: 1em;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #e1e1e1;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+@media (min-width: 768px) {
+  .card img {
+    max-height: 40em;
+  }
+}
+.btn{
+    color: #e0ecf5;
+}
+#carouselExampleControls{
+    position: fixed;  
+    margin-top: 40px;
+    left: 3%;
+    width: 60%;
+    max-width: 900px;
+    max-height: 900px;
+}
