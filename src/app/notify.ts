@@ -5,4 +5,6 @@ export class NotifyModel{
     content : string = '';
     start : string = '';
     end : string = '';  
+    login: string = '';
+    display: string = '';
 }

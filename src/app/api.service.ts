@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http'
 import { map } from 'rxjs/operators';
+import { NotifyModel } from './notify';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
   url = "http://localhost:3000/posts"
+  item : NotifyModel[] = [];
+
   constructor(
     private http: HttpClient,
   ) { }
+
 
   getNotify(){
     return this.http.get(this.url).pipe(map((res:any)=>{

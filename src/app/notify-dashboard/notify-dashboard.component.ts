@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { elementAt } from 'rxjs';
 import { ApiService } from '../api.service';
 import { NotifyModel } from '../notify';
 @Component({
@@ -14,10 +15,12 @@ export class NotifyDashboardComponent implements OnInit {
   @ViewChild('content') content !: boolean;
   formValue !: FormGroup
   notifyModelObj: NotifyModel = new NotifyModel()
-  notifyData !: any
-  showAdd!: boolean
-  showUpdate!:boolean
+  notifyData: any
+  showAdd !: boolean
+  showUpdate!: boolean
   closeResult = ''
+  countries = ['sau', 'truoc']
+  todaydate = new Date()
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,12 +36,34 @@ export class NotifyDashboardComponent implements OnInit {
       content: [''],
       start: [''],
       end: [''],
+      login: [''],
+      display: [''],
     })
     this.getAllNotify()
-    
+    // this.api.getNotify().subscribe(res => {
+    //   this.notifyData = res
+    //   this.open(this.content)
+    // })  
   }
 
-  clickAddNotify(){
+  open(content: any) {
+    this.modalService.open(content,
+      { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      })
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  clickAddNotify() {
     this.formValue.reset()
     this.showAdd = true
     this.showUpdate = false
@@ -50,6 +75,8 @@ export class NotifyDashboardComponent implements OnInit {
     this.notifyModelObj.content = this.formValue.value.content
     this.notifyModelObj.start = this.formValue.value.start
     this.notifyModelObj.end = this.formValue.value.end
+    this.notifyModelObj.login = this.formValue.value.login
+    this.notifyModelObj.display = this.formValue.value.display
 
     this.api.postNotify(this.notifyModelObj).subscribe(res => {
       console.log(res);
@@ -83,22 +110,26 @@ export class NotifyDashboardComponent implements OnInit {
     this.formValue.controls['content'].setValue(row.content)
     this.formValue.controls['start'].setValue(row.start)
     this.formValue.controls['end'].setValue(row.end)
+    this.formValue.controls['login'].setValue(row.login)
+    this.formValue.controls['display'].setValue(row.display)
   }
-  updateNotifyDatails(){
+  updateNotifyDatails() {
     this.notifyModelObj.title = this.formValue.value.title
     this.notifyModelObj.description = this.formValue.value.description
     this.notifyModelObj.content = this.formValue.value.content
     this.notifyModelObj.start = this.formValue.value.start
     this.notifyModelObj.end = this.formValue.value.end
+    this.notifyModelObj.login = this.formValue.value.login
+    this.notifyModelObj.display = this.formValue.value.display
 
     this.api.updateNotify(this.notifyModelObj, this.notifyModelObj.id)
-    .subscribe(res=>{
-      alert("Update Seccessfully")
-      let ref = document.getElementById('cancel')
-      ref?.click()
-      this.formValue.reset()
-      this.getAllNotify()
-    })
+      .subscribe(res => {
+        alert("Update Seccessfully")
+        let ref = document.getElementById('cancel')
+        ref?.click()
+        this.formValue.reset()
+        this.getAllNotify()
+      })
   }
   onselectImage(e: any) {
     if (e.target.files) {
