@@ -37,22 +37,22 @@ export class LoginComponent implements OnInit {
     })
     this.api.getNotify().subscribe(res => {
       this.notifyData = res
-      this.open(this.content)
+      //this.open(this.content)
     })
     const routeParams = this.route.snapshot.paramMap;
     const productIdFromRoute = Number(routeParams.get('id'));
   }
+
   login() {
-    debugger
     this.http.get<any>("http://localhost:3000/signupUsers")
       .subscribe(res => {
         const user = res.find((a: any) => {
           return a.accout === this.loginForm.value.accout && a.password === this.loginForm.value.password
-        })
+        }) 
         if (user) {
           this.loginForm.reset()
           this.router.navigate(['dashboard'])
-          //this.open(this.content)
+          this.open(this.content)
         } else {
           alert("Username or password is incorrect")
         }

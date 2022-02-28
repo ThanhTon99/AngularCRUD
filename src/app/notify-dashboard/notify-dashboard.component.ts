@@ -19,7 +19,7 @@ export class NotifyDashboardComponent implements OnInit {
   showAdd !: boolean
   showUpdate!: boolean
   closeResult = ''
-  countries = ['sau', 'truoc']
+  countries = ['Trước Đăng Nhập', 'Sau Đăng Nhập']
   todaydate = new Date()
 
   constructor(
@@ -38,12 +38,13 @@ export class NotifyDashboardComponent implements OnInit {
       end: [''],
       login: [''],
       display: [''],
+      file: [],
     })
-    this.getAllNotify()
-    // this.api.getNotify().subscribe(res => {
-    //   this.notifyData = res
-    //   this.open(this.content)
-    // })  
+
+    this.api.getNotify().subscribe(res => {
+      this.notifyData = res
+      //this.open(this.content)
+    })
   }
 
   open(content: any) {
@@ -77,6 +78,7 @@ export class NotifyDashboardComponent implements OnInit {
     this.notifyModelObj.end = this.formValue.value.end
     this.notifyModelObj.login = this.formValue.value.login
     this.notifyModelObj.display = this.formValue.value.display
+    this.notifyModelObj.file = this.formValue.value.file
 
     this.api.postNotify(this.notifyModelObj).subscribe(res => {
       console.log(res);
@@ -112,6 +114,7 @@ export class NotifyDashboardComponent implements OnInit {
     this.formValue.controls['end'].setValue(row.end)
     this.formValue.controls['login'].setValue(row.login)
     this.formValue.controls['display'].setValue(row.display)
+    this.formValue.controls['file'].setValue(row.file)
   }
   updateNotifyDatails() {
     this.notifyModelObj.title = this.formValue.value.title
@@ -121,6 +124,7 @@ export class NotifyDashboardComponent implements OnInit {
     this.notifyModelObj.end = this.formValue.value.end
     this.notifyModelObj.login = this.formValue.value.login
     this.notifyModelObj.display = this.formValue.value.display
+    this.notifyModelObj.file = this.formValue.value.file
 
     this.api.updateNotify(this.notifyModelObj, this.notifyModelObj.id)
       .subscribe(res => {
