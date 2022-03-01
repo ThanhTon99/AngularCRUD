@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         if (user) {
           this.loginForm.reset()
           this.router.navigate(['dashboard'])
-          this.open(this.content)
+          //this.open(this.content)
         } else {
           alert("Username or password is incorrect")
         }

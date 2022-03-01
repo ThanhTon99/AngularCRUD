@@ -9,13 +9,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ApiService } from './api.service';
+import { NotifyManageComponent } from './notify-manage/notify-manage.component';
 
 @NgModule({
-  declarations: [			
+  declarations: [				
     AppComponent,
       NotifyDashboardComponent,
       LoginComponent,
       SignupComponent,
+      NotifyManageComponent
    ],
   imports: [
     AppRoutingModule,

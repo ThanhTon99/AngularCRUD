@@ -171,12 +171,16 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">
+        <button (click)="onParentButtonClick()" type="button" class="btn btn-primary" (click)="modal.close('Save click')">
           Đã Xem
         </button>
       </div>
     </ng-template>
   </div>
+  <app-notify-manage
+  [parentClick]="parentClick">
+    
+  </app-notify-manage>
   <!-- <div class="cart-item" *ngFor="let item of notifyData">
     <span>{{item.title}}</span>
     {{ todaydate | date: 'hh:mm, dd-MM-y' }}

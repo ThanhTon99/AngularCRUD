@@ -9,26 +9,6 @@
       "end": "2022-03-06",
       "login": "Sau Đăng Nhập",
       "display": "tin tuc"
-    },
-    {
-      "id": 2,
-      "title": null,
-      "description": null,
-      "content": null,
-      "start": null,
-      "end": null,
-      "login": null,
-      "display": null
-    },
-    {
-      "id": 3,
-      "title": null,
-      "description": null,
-      "content": null,
-      "start": null,
-      "end": null,
-      "login": null,
-      "display": null
     }
   ],
   "signupUsers": [

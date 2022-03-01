@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { elementAt } from 'rxjs';
+import { elementAt, Subject } from 'rxjs';
 import { ApiService } from '../api.service';
 import { NotifyModel } from '../notify';
 @Component({
@@ -11,6 +11,7 @@ import { NotifyModel } from '../notify';
 })
 export class NotifyDashboardComponent implements OnInit {
 
+  notify: NotifyModel | undefined
   urls: string[] = [];
   @ViewChild('content') content !: boolean;
   formValue !: FormGroup
@@ -21,6 +22,9 @@ export class NotifyDashboardComponent implements OnInit {
   closeResult = ''
   countries = ['Trước Đăng Nhập', 'Sau Đăng Nhập']
   todaydate = new Date()
+  parentClick: Subject<void> = new Subject<void>()
+
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,10 +47,14 @@ export class NotifyDashboardComponent implements OnInit {
 
     this.api.getNotify().subscribe(res => {
       this.notifyData = res
-      //this.open(this.content)
+      this.open(this.content)
     })
   }
 
+  onParentButtonClick() {
+    this.parentClick.next()
+  }
+  
   open(content: any) {
     this.modalService.open(content,
       { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -63,6 +71,22 @@ export class NotifyDashboardComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+  addtoManage(){
+    this.notifyModelObj.title = this.formValue.value.title
+    this.notifyModelObj.description = this.formValue.value.description
+    this.notifyModelObj.content = this.formValue.value.content
+    this.notifyModelObj.start = this.formValue.value.start
+    this.notifyModelObj.end = this.formValue.value.end
+    this.notifyModelObj.login = this.formValue.value.login
+    this.notifyModelObj.display = this.formValue.value.display
+    this.notifyModelObj.file = this.formValue.value.file
+
+    this.api.postNotify(this.notifyModelObj).subscribe(res =>{
+      let ref = document.getElementById('cancel')
+      ref?.click()
+      this.formValue.reset()
+    })
   }
   clickAddNotify() {
     this.formValue.reset()
