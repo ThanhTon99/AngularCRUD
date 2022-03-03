@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { elementAt, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ApiService } from '../api.service';
 import { NotifyModel } from '../notify';
 @Component({
@@ -20,11 +20,8 @@ export class NotifyDashboardComponent implements OnInit {
   showAdd !: boolean
   showUpdate!: boolean
   closeResult = ''
-  countries = ['Trước Đăng Nhập', 'Sau Đăng Nhập']
   todaydate = new Date()
   parentClick: Subject<void> = new Subject<void>()
-
-
 
   constructor(
     private formBuilder: FormBuilder,

@@ -1,12 +1,13 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../api.service';
 import { NotifyModel } from '../notify';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,41 +15,53 @@ import { NotifyModel } from '../notify';
 })
 export class LoginComponent implements OnInit {
 
-  public loginForm!: FormGroup
+  public loginForm!: FormGroup;
+  public notifyModel!: NotifyModel;
 
-  @ViewChild('content') content !: boolean;
-  notifyData: any
+  @ViewChild('content') content : any;
+  notifyData: any;
   closeResult = '';
-
+  todaydate = new Date();
+  parentClick: Subject<void> = new Subject<void>()
   constructor(
+
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
     private modalService: NgbModal,
     private api: ApiService,
-    private route: ActivatedRoute,
 
   ) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       accout: [''],
-      password: ['']
+      password: [''],
+      login:['truoc'],
     })
     this.api.getNotify().subscribe(res => {
-      this.notifyData = res
-      //this.open(this.content)
+      this.notifyData = res;
     })
-    const routeParams = this.route.snapshot.paramMap;
-    const productIdFromRoute = Number(routeParams.get('id'));
+    this.http.get<any>("http://localhost:3000/posts").subscribe(res =>{ 
+      const time = res.find((a:any)=>{
+        return a.login === this.loginForm.value.login
+      })
+      if (time){
+          this.open(this.content)
+      }else {
+        this.getAllNotify()
+      }
+    })
   }
-
+  onParentButtonClick() {
+    this.parentClick.next()
+  }
   login() {
     this.http.get<any>("http://localhost:3000/signupUsers")
       .subscribe(res => {
         const user = res.find((a: any) => {
           return a.accout === this.loginForm.value.accout && a.password === this.loginForm.value.password
-        }) 
+        })
         if (user) {
           this.loginForm.reset()
           this.router.navigate(['dashboard'])
@@ -61,6 +74,11 @@ export class LoginComponent implements OnInit {
       })
   }
 
+  getAllNotify(){
+    this.api.getNotify().subscribe(res => {
+      this.notifyData = res;
+    } 
+  )}
   open(content: any) {
     this.modalService.open(content,
       { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -78,5 +96,4 @@ export class LoginComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
 }

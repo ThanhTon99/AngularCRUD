@@ -25,4 +25,5 @@ export class NotifyManageComponent implements OnInit {
   incrementValue(){
     return this.clickCount = [this.todaydate + ' ĐÃ XEM'] 
   }
+  
 }

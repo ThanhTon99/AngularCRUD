@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
 import { ApiService } from './api.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
   title = 'AngularCRUD';
   todaydate = new Date()
   notifyData : any
-
+  parentClick: Subject<void> = new Subject<void>()
   constructor(
       private modalService: NgbModal,
       private api: ApiService,
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
         this.notifyData = res
       })
     }
-  
+
 
 
 }
