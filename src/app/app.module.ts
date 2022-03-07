@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotifyDashboardComponent } from './notify-dashboard/notify-dashboard.component';
 import { CKEditorModule } from 'ckeditor4-angular';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
@@ -17,12 +17,14 @@ import { NotifyManageComponent } from './notify-manage/notify-manage.component';
       NotifyDashboardComponent,
       LoginComponent,
       SignupComponent,
-      NotifyManageComponent
+      NotifyManageComponent,
+      
    ],
   imports: [
-    AppRoutingModule,
     BrowserModule,  
-    ReactiveFormsModule, 
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
     HttpClientModule, 
     CKEditorModule, 
   ],

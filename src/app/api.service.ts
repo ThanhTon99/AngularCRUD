@@ -13,7 +13,10 @@ export class ApiService {
   constructor(
     private http: HttpClient,
   ) { }
-
+  
+  getItems(){
+    return this.item
+  }
 
   getNotify(){
     return this.http.get(this.url).pipe(map((res:any)=>{

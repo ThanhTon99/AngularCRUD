@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { ApiService } from '../api.service';
@@ -7,10 +7,12 @@ import { NotifyModel } from '../notify';
 @Component({
   selector: 'app-notify-dashboard',
   templateUrl: './notify-dashboard.component.html',
-  styleUrls: ['./notify-dashboard.component.css']
+  styleUrls: ['./notify-dashboard.component.css'],
+
 })
 export class NotifyDashboardComponent implements OnInit {
-
+  
+  addForm!: NgForm;
   notify: NotifyModel | undefined
   urls: string[] = [];
   @ViewChild('content') content !: boolean;
@@ -22,6 +24,7 @@ export class NotifyDashboardComponent implements OnInit {
   closeResult = ''
   todaydate = new Date()
   parentClick: Subject<void> = new Subject<void>()
+  items = this.api.getItems();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,12 +42,12 @@ export class NotifyDashboardComponent implements OnInit {
       end: [''],
       login: [''],
       display: [''],
-      file: [],
+ //     file: [],
     })
 
     this.api.getNotify().subscribe(res => {
       this.notifyData = res
-      this.open(this.content)
+      //this.open(this.content)
     })
   }
 
@@ -69,22 +72,7 @@ export class NotifyDashboardComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-  addtoManage(){
-    this.notifyModelObj.title = this.formValue.value.title
-    this.notifyModelObj.description = this.formValue.value.description
-    this.notifyModelObj.content = this.formValue.value.content
-    this.notifyModelObj.start = this.formValue.value.start
-    this.notifyModelObj.end = this.formValue.value.end
-    this.notifyModelObj.login = this.formValue.value.login
-    this.notifyModelObj.display = this.formValue.value.display
-    this.notifyModelObj.file = this.formValue.value.file
 
-    this.api.postNotify(this.notifyModelObj).subscribe(res =>{
-      let ref = document.getElementById('cancel')
-      ref?.click()
-      this.formValue.reset()
-    })
-  }
   clickAddNotify() {
     this.formValue.reset()
     this.showAdd = true
@@ -99,7 +87,7 @@ export class NotifyDashboardComponent implements OnInit {
     this.notifyModelObj.end = this.formValue.value.end
     this.notifyModelObj.login = this.formValue.value.login
     this.notifyModelObj.display = this.formValue.value.display
-    this.notifyModelObj.file = this.formValue.value.file
+  //  this.notifyModelObj.file = this.formValue.value.file
 
     this.api.postNotify(this.notifyModelObj).subscribe(res => {
       console.log(res);
@@ -135,7 +123,7 @@ export class NotifyDashboardComponent implements OnInit {
     this.formValue.controls['end'].setValue(row.end)
     this.formValue.controls['login'].setValue(row.login)
     this.formValue.controls['display'].setValue(row.display)
-    this.formValue.controls['file'].setValue(row.file)
+   // this.formValue.controls['file'].setValue(row.file)
   }
   updateNotifyDatails() {
     this.notifyModelObj.title = this.formValue.value.title
@@ -145,7 +133,7 @@ export class NotifyDashboardComponent implements OnInit {
     this.notifyModelObj.end = this.formValue.value.end
     this.notifyModelObj.login = this.formValue.value.login
     this.notifyModelObj.display = this.formValue.value.display
-    this.notifyModelObj.file = this.formValue.value.file
+   // this.notifyModelObj.file = this.formValue.value.file
 
     this.api.updateNotify(this.notifyModelObj, this.notifyModelObj.id)
       .subscribe(res => {

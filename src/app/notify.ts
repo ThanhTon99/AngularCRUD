@@ -7,5 +7,5 @@ export class NotifyModel{
     end : string = '';  
     login: string = '';
     display: string = '';
-    file: any;
+    //file: string | any;
 }
